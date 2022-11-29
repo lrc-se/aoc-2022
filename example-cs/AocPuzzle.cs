@@ -21,9 +21,10 @@ internal abstract class AocPuzzle<TInput, TResult> where TResult : struct
         }
     }
 
-    protected abstract TInput[] ParseInput(string[] lines);
+    protected abstract TInput ParseInput(string[] lines);
     protected abstract TResult RunPartOne();
     protected abstract TResult RunPartTwo();
 
-    protected TInput[] _input = Array.Empty<TInput>();
+    private TInput? _input;
+    protected TInput Input => _input ?? throw new MissingFieldException("Input not provided");
 }

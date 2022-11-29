@@ -70,8 +70,8 @@ let isValidField fieldType value =
 let isValidPassport2 passport =
     isValidPassport passport && (passport |> Map.forall isValidField)
 
-let countValid validator items =
-    let validItems = items |> Array.filter validator
+let countValid validate items =
+    let validItems = items |> Array.filter validate
     validItems.Length
 
 
@@ -79,6 +79,6 @@ let parseInput lines =
     (lines |> String.concat "\n").Split("\n\n")
     |> Array.map parsePassport
 
-let runPartOne input = countValid isValidPassport input
+let runPartOne = countValid isValidPassport
 
-let runPartTwo input = countValid isValidPassport2 input
+let runPartTwo = countValid isValidPassport2

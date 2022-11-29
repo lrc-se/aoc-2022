@@ -49,8 +49,15 @@ Note that the JavaScript and Python versions have no build step and so do not re
 Exercises
 ---------
 
-There are also some re-implementations of puzzles from previous years, to get the hang of it before this year's event starts.
+There are also some re-implementations of puzzles from previous years, to get the hang of it before this year's event starts:
 
+### 2020: Day 4 (F#)
+
+Good match for pattern matching. Trying to maintain the functional approach as much as possible, with an alternative implementation using a discriminated union to enforce exhaustive matching at the price of longer code.
+
+### 2021: Day 14 (Nim)
+
+The `CountTable` type is very convenient for a common class of AoC problems. Nim does seem to enable quite compact code, but switching between value and reference semantics takes some getting used to.
 
 Puzzles
 -------

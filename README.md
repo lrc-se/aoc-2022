@@ -62,4 +62,6 @@ The `CountTable` type is very convenient for a common class of AoC problems. Nim
 Puzzles
 -------
 
-TBA
+### Day 1 (F#)
+
+Still getting used to F# syntax, but otherwise a nice functional start.

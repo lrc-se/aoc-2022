@@ -69,3 +69,7 @@ Still getting used to F# syntax, but otherwise a nice functional start.
 ### Day 2 (Nim)
 
 Rewrote solution after part 2 for better typing, apart from which the previously alluded-to compactness continues to apply.
+
+### Day 3 (Nim)
+
+Good problem for Nim's native set operations.

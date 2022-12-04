@@ -73,3 +73,7 @@ Rewrote solution after part 2 for better typing, apart from which the previously
 ### Day 3 (Nim)
 
 Good problem for Nim's native set operations.
+
+### Day 4 (F#)
+
+Trying out F#'s sets for comparison, plus lambdas for terseness.

@@ -8,4 +8,4 @@ let runPuzzle =
     else: quit "Unknown part"
 
 let filename = (if getEnv("mode") == "test": "input-test" else: "input") & ".txt"
-echo "Result: ", readFile(filename).strip.splitLines.parseInput.runPuzzle
+echo "Result: ", readFile(filename).strip(leading = false).splitLines.parseInput.runPuzzle

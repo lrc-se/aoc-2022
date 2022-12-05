@@ -77,3 +77,8 @@ Good problem for Nim's native set operations.
 ### Day 4 (F#)
 
 Trying out F#'s sets for comparison, plus lambdas for terseness.
+
+### Day 5 (Nim)
+
+Sequences and backward indices all the way. The solution is (I hope) general and should handle any (valid) input.
+I also discovered and fixed a defect in the base code having to do with reading the input file.

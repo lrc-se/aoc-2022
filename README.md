@@ -82,3 +82,7 @@ Trying out F#'s sets for comparison, plus lambdas for terseness.
 
 Sequences and backward indices all the way. The solution is (I hope) general and should handle any (valid) input.
 I also discovered and fixed a defect in the base code having to do with reading the input file.
+
+### Day 6 (Nim)
+
+Back to bit sets again. They're fast.

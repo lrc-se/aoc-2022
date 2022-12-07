@@ -1,24 +1,26 @@
 module Puzzle
 
+type File = { Name: string; Size: int }
+
 type Directory =
     {
         Name: string
-        mutable Size: int
         Parent: Directory option
+        mutable Directories: Directory list
+        mutable Files: File list
     }
 
-let private getMatchingSizes filter (directories: Directory list) =
-    directories
-    |> List.map (fun dir -> dir.Size)
-    |> List.filter filter
+let rec private getTotalSize (directory: Directory) =
+    (directory.Files |> List.sumBy (fun file -> file.Size)) + (directory.Directories |> List.sumBy getTotalSize)
 
 
 let parseInput (lines: string[]) =
     let rootDir: Directory =
         {
             Name = "/"
-            Size = 0
             Parent = None
+            Directories = []
+            Files = []
         }
 
     let mutable dirs = [rootDir]
@@ -28,37 +30,38 @@ let parseInput (lines: string[]) =
         | [| "$"; "cd"; dir |] ->
             match dir with
             | "/" -> curDir <- rootDir
-            | ".." -> curDir <- curDir.Parent.Value
+            | ".." ->
+                match curDir.Parent with
+                | Some(parentDir) -> curDir <- parentDir
+                | None -> ()
             | name ->
-                let newDir: Directory =
+                let subDir: Directory =
                     {
                         Name = name
-                        Size = 0
                         Parent = Some(curDir)
+                        Directories = []
+                        Files = []
                     }
 
-                curDir <- newDir
-                dirs <- newDir :: dirs
+                curDir.Directories <- subDir :: curDir.Directories
+                curDir <- subDir
+                dirs <- subDir :: dirs
         | [| "$"; "ls" |] | [| "dir"; _ |] -> ()
-        | [| size; _ |] ->
-            let fileSize = int size
-            curDir.Size <- curDir.Size + fileSize
-
-            let mutable parentDir = curDir.Parent
-            while parentDir.IsSome do
-                parentDir.Value.Size <- parentDir.Value.Size + fileSize
-                parentDir <- parentDir.Value.Parent
+        | [| size; name |] -> curDir.Files <- { Name = name; Size = int size } :: curDir.Files
         | _ -> ()
 
     dirs
 
 let runPartOne (input: Directory list) =
     input
-    |> getMatchingSizes (fun size -> size <= 100_000)
+    |> List.map getTotalSize
+    |> List.filter (fun size -> size <= 100_000)
     |> List.sum
 
 let runPartTwo (input: Directory list) =
-    let neededSize = 30_000_000 - (70_000_000 - (List.last input).Size)
-    input
-    |> getMatchingSizes (fun size -> size >= neededSize)
+    let sizes = input |> List.map getTotalSize
+    let neededSize = 30_000_000 - (70_000_000 - (List.last sizes))
+
+    sizes
+    |> List.filter (fun size -> size >= neededSize)
     |> List.min

@@ -86,3 +86,7 @@ I also discovered and fixed a defect in the base code having to do with reading 
 ### Day 6 (Nim)
 
 Back to bit sets again. They're fast.
+
+### Day 7 (F#)
+
+Wanted to use F# for better pattern matching, but came up against the functional wall. The current solution is therefore half-imperative and half-mutable and takes a number of shortcuts when traversing the input, only considering lines that actually matter, but at least it's pretty fast...

@@ -91,3 +91,7 @@ Back to bit sets again. They're fast.
 
 Wanted to use F# for better pattern matching, but came up against the functional wall. The current solution is therefore half-imperative and half-mutable and takes a number of shortcuts when traversing the input, only considering lines that actually matter, but at least it's pretty fast...
 *__Update:__ Partially rewrote the solution to calculate total sizes recursively afterwards instead of during parsing, so it's at least a bit more functional now, and performance is equivalent. Input traversal is still handled linearly in a mutable fashion, though.*
+
+### Day 8 (Nim)
+
+Mmm, loops.

@@ -18,8 +18,7 @@ func parseMotion(line: string): Motion =
 
   result.steps = parseInt(parts[1])
 
-func simulateRope(motions: seq[Motion]; knotCount: int): int =
-  var tailPositions = initHashSet[Vector]()
+func simulateRope(motions: seq[Motion]; knotCount: int): HashSet[Vector] =
   var headPos = Vector(x: 0, y: 0)
   var knotPositions = newSeq[Vector](knotCount - 1)
   for motion in motions:
@@ -43,13 +42,11 @@ func simulateRope(motions: seq[Motion]; knotCount: int): int =
 
         nextPos = knotPos
 
-      tailPositions.incl(knotPositions[^1])
-
-  result = tailPositions.card
+      result.incl(knotPositions[^1])
 
 
 func parseInput*(lines: seq[string]): seq[Motion] = lines.map(parseMotion)
 
-func runPartOne*(input: seq[Motion]): int = simulateRope(input, 2)
+func runPartOne*(input: seq[Motion]): int = simulateRope(input, 2).card
 
-func runPartTwo*(input: seq[Motion]): int = simulateRope(input, 10)
+func runPartTwo*(input: seq[Motion]): int = simulateRope(input, 10).card

@@ -95,3 +95,7 @@ Wanted to use F# for better pattern matching, but came up against the functional
 ### Day 8 (Nim)
 
 Mmm, loops.
+
+### Day 9 (Nim)
+
+Still getting tripped up by Nim's mutability handling, but it turned out pretty well.

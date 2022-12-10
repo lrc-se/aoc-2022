@@ -8,10 +8,10 @@ let private executeLine (values: int list) (line: string) =
 
 let private signalStrength (values: int array) cycle = values[cycle - 1] * cycle
 
-let private drawScreen (pixels: char list) value =
-    match pixels.Length % 40 with
-    | pos when pos >= value - 1 && pos <= value + 1 -> '#' :: pixels
-    | _ -> '.' :: pixels
+let private pixelValue cycle value =
+    match cycle % 40 with
+    | pos when pos >= value - 1 && pos <= value + 1 -> '#'
+    | _ -> '.'
 
 
 let parseInput lines = lines
@@ -29,16 +29,12 @@ let runPartOne input =
     |> string
 
 let runPartTwo input =
-    let values =
+    let screen =
         input
         |> Array.fold executeLine [1]
         |> List.rev
-
-    let screen =
-        values
-        |> List.fold drawScreen []
-        |> List.tail
-        |> List.rev
+        |> List.take (6 * 40)
+        |> List.mapi pixelValue
         |> List.chunkBySize 40
         |> List.map (List.map string >> String.concat "")
         |> String.concat "\n"

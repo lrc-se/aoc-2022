@@ -103,3 +103,7 @@ Still getting tripped up by Nim's mutability handling, but it turned out pretty 
 ### Day 10 (F#)
 
 This time it's fully functional, as it were.
+
+### Day 11 (Nim)
+
+Using OO-style Nim, with modulo arithmetic for part 2. Input parsing again takes a number of shortcuts, relying on consistent entry format.

@@ -107,3 +107,7 @@ This time it's fully functional, as it were.
 ### Day 11 (Nim)
 
 Using OO-style Nim, with modulo arithmetic for part 2. Input parsing again takes a number of shortcuts, relying on consistent entry format.
+
+### Day 12 (Nim)
+
+Repurposed and simplified my JS cost-distance solution to [day 15 from 2021](https://github.com/lrc-se/aoc-2021/tree/main/day15), using coordinate tuple indexing.

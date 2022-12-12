@@ -12,14 +12,14 @@ const
   HIGH = 'z'.ord
   deltas: seq[Coord] = @[(0, -1), (1, 0), (0, 1), (-1, 0)]
 
-func calculatePathLength(heightMap: HeightMap): int =
+func calculatePathLength(heightMap: HeightMap; stopEarly = false): int =
   var
-    visited = { heightMap.start: 0 }.toTable
+    visited = { heightMap.dest: 0 }.toTable
     unvisited = initTable[Coord, int]()
 
   for delta in deltas:
-    let pos: Coord = (heightMap.start.x + delta.x, heightMap.start.y + delta.y)
-    if pos in heightMap.elevations and heightMap.elevations[pos] <= LOW + 1:
+    let pos: Coord = (heightMap.dest.x + delta.x, heightMap.dest.y + delta.y)
+    if pos in heightMap.elevations and heightMap.elevations[pos] >= HIGH - 1:
       unvisited[pos] = 1
 
   while unvisited.len > 0:
@@ -32,14 +32,17 @@ func calculatePathLength(heightMap: HeightMap): int =
         curCoord = coord
         curLength = length
 
+    if stopEarly and heightMap.elevations[curCoord] == LOW:
+      return curLength
+
     unvisited.del(curCoord)
     visited[curCoord] = curLength
     for delta in deltas:
       let pos: Coord = (curCoord.x + delta.x, curCoord.y + delta.y)
-      if pos notin visited and pos in heightMap.elevations and heightMap.elevations[pos] <= heightMap.elevations[curCoord] + 1:
+      if pos notin visited and pos in heightMap.elevations and heightMap.elevations[pos] >= heightMap.elevations[curCoord] - 1:
         unvisited[pos] = curLength + 1
 
-  result = visited.getOrDefault(heightMap.dest, high(int))
+  result = visited.getOrDefault(heightMap.start, high(int))
 
 
 func parseInput*(lines: seq[string]): HeightMap =
@@ -57,10 +60,4 @@ func parseInput*(lines: seq[string]): HeightMap =
 
 func runPartOne*(input: HeightMap): int = input.calculatePathLength
 
-func runPartTwo*(input: HeightMap): int =
-  result = high(int)
-  var heightMap = input
-  for coord, elevation in heightMap.elevations:
-    if elevation == LOW:
-      heightMap.start = coord
-      result = min(result, heightMap.calculatePathLength)
+func runPartTwo*(input: HeightMap): int = input.calculatePathLength(true)

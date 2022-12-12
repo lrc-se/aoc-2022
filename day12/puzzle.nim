@@ -14,32 +14,32 @@ const
 
 func calculatePathLength(heightMap: HeightMap): int =
   var
-    output = { heightMap.start: 0 }.toTable
-    lengths = initTable[Coord, int]()
+    visited = { heightMap.start: 0 }.toTable
+    unvisited = initTable[Coord, int]()
 
   for delta in deltas:
     let pos: Coord = (heightMap.start.x + delta.x, heightMap.start.y + delta.y)
-    if heightMap.elevations.hasKey(pos) and heightMap.elevations[pos] <= LOW + 1:
-      lengths[pos] = 1
+    if pos in heightMap.elevations and heightMap.elevations[pos] <= LOW + 1:
+      unvisited[pos] = 1
 
-  while lengths.len > 0:
+  while unvisited.len > 0:
     var
-      coord: Coord
-      shortestLength = high(int)
+      curCoord: Coord
+      curLength = high(int)
 
-    for key, val in lengths:
-      if val < shortestLength:
-        coord = key
-        shortestLength = val
+    for coord, length in unvisited:
+      if length < curLength:
+        curCoord = coord
+        curLength = length
 
-    lengths.del(coord)
-    output[coord] = shortestLength
+    unvisited.del(curCoord)
+    visited[curCoord] = curLength
     for delta in deltas:
-      let pos: Coord = (coord.x + delta.x, coord.y + delta.y)
-      if not output.hasKey(pos) and heightMap.elevations.hasKey(pos) and heightMap.elevations[pos] <= heightMap.elevations[coord] + 1:
-        lengths[pos] = shortestLength + 1
+      let pos: Coord = (curCoord.x + delta.x, curCoord.y + delta.y)
+      if pos notin visited and pos in heightMap.elevations and heightMap.elevations[pos] <= heightMap.elevations[curCoord] + 1:
+        unvisited[pos] = curLength + 1
 
-  result = output.getOrDefault(heightMap.dest, -1)
+  result = visited.getOrDefault(heightMap.dest, high(int))
 
 
 func parseInput*(lines: seq[string]): HeightMap =
@@ -58,13 +58,9 @@ func parseInput*(lines: seq[string]): HeightMap =
 func runPartOne*(input: HeightMap): int = input.calculatePathLength
 
 func runPartTwo*(input: HeightMap): int =
+  result = high(int)
   var heightMap = input
-  var pathLengths: seq[int]
   for coord, elevation in heightMap.elevations:
     if elevation == LOW:
       heightMap.start = coord
-      let pathLength = heightMap.calculatePathLength
-      if pathLength != -1:
-        pathLengths.add(pathLength)
-
-  result = pathLengths.min
+      result = min(result, heightMap.calculatePathLength)

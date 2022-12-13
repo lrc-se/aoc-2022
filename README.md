@@ -111,3 +111,7 @@ Using OO-style Nim, with modulo arithmetic for part 2. Input parsing again takes
 ### Day 12 (Nim)
 
 Repurposed and simplified my JS cost-distance solution to [day 15 from 2021](https://github.com/lrc-se/aoc-2021/tree/main/day15), using coordinate tuple indexing.
+
+### Day 13 (F#)
+
+Well this was really something. Had to wrap my head around linear parsing in a functional setting, but it turned out rather well in the end with a good deal of pattern matching, and the actual comparing step could be delegated to a library function. There's a small shortcut in the tokenizer, but otherwise the solution is, again, "fully functional".

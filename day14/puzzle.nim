@@ -20,8 +20,9 @@ func getCave(rockLines: seq[Line]): Table[Coord, Tile] =
         for x in min(line[i - 1].x, line[i].x) .. max(line[i - 1].x, line[i].x):
           result[(x, y)] = Rock
 
-func simulateSand(input: Reservoir): int =
+func simulateSand(input: Reservoir; floorY = -1): int =
   var cave = input.rockLines.getCave
+  let maxY = max(input.max.y, floorY)
   while true:
     var
       sandPos = SOURCE
@@ -32,12 +33,13 @@ func simulateSand(input: Reservoir): int =
       infiniteCount = 0
       for delta in deltas:
         let nextPos: Coord = (sandPos.x + delta.x, sandPos.y + delta.y)
-        if nextPos.x < input.min.x or nextPos.x > input.max.x or nextPos.y > input.max.y:
+        if nextPos.y > maxY:
           infiniteCount += 1
           failCount += 1
           continue
 
-        if cave.getOrDefault(nextPos, Air) == Air:
+        let tile = if nextPos.y == floorY: Rock else: cave.getOrDefault(nextPos, Air)
+        if tile == Air:
           sandPos = nextPos
           break
         else:
@@ -45,30 +47,6 @@ func simulateSand(input: Reservoir): int =
 
     if infiniteCount > 0 or failCount < deltas.len:
       return
-
-    cave[sandPos] = Sand
-    result += 1
-
-func simulateSand2(input: Reservoir): int =
-  var cave = input.rockLines.getCave
-  let maxY = input.max.y + 2
-  while true:
-    var
-      sandPos = SOURCE
-      failCount: int
-
-    while failCount < deltas.len:
-      failCount = 0
-      for delta in deltas:
-        let
-          nextPos: Coord = (sandPos.x + delta.x, sandPos.y + delta.y)
-          tile = if nextPos.y == maxY: Rock else: cave.getOrDefault(nextPos, Air)
-
-        if tile == Air:
-          sandPos = nextPos
-          break
-        else:
-          failCount += 1
 
     cave[sandPos] = Sand
     result += 1
@@ -93,4 +71,4 @@ func parseInput*(lines: seq[string]): Reservoir =
 
 func runPartOne*(input: Reservoir): int = input.simulateSand
 
-func runPartTwo*(input: Reservoir): int = input.simulateSand2
+func runPartTwo*(input: Reservoir): int = input.simulateSand(input.max.y + 2)

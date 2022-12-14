@@ -115,3 +115,7 @@ Repurposed and simplified my JS cost-distance solution to [day 15 from 2021](htt
 ### Day 13 (F#)
 
 Well this was really something. Had to wrap my head around linear parsing in a functional setting, but it turned out rather well in the end with a good deal of pattern matching, and the actual comparing step could be delegated to a library function. There's a small shortcut in the tokenizer, but otherwise the solution is, again, "fully functional".
+
+### Day 14 (Nim)
+
+Today was mostly about getting the halting conditions right. Run times in debug mode are also starting to creep upwards for part 2, but release mode is still very performant.

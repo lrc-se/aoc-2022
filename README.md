@@ -119,3 +119,7 @@ Well this was really something. Had to wrap my head around linear parsing in a f
 ### Day 14 (Nim)
 
 Today was mostly about getting the halting conditions right. Run times in debug mode are also starting to creep upwards for part 2, but release mode is still very performant.
+
+### Day 15 (Nim)
+
+Rewrote this several times to get sensible run times. It could probably be improved further still, but my latest scan line approach keeps part 2 under 2 seconds, which feels good enough.

@@ -11,7 +11,7 @@ type
     beacon: Beacon
   Scan = object
     sensors: seq[Sensor]
-    minX, maxX: int
+    min, max: Coord
 
 func dist(coord1, coord2: Coord): int = abs(coord1.x - coord2.x) + abs(coord1.y - coord2.y)
 
@@ -31,8 +31,8 @@ func parseInput*(lines: seq[string]): Scan =
         beaconDist = pos.dist(beaconPos)
 
       result.sensors.add(Sensor(pos: pos, beacon: Beacon(pos: beaconPos, dist: beaconDist)))
-      result.minX = min(result.minX, pos.x - beaconDist)
-      result.maxX = max(result.maxX, pos.x + beaconDist)
+      result.min = (min(result.min.x, pos.x - beaconDist), min(result.min.y, pos.y - beaconDist))
+      result.max = (max(result.max.x, pos.x + beaconDist), max(result.max.y, pos.y + beaconDist))
 
 func runPartOne*(input: Scan; isTest: bool): int =
   let
@@ -40,7 +40,7 @@ func runPartOne*(input: Scan; isTest: bool): int =
     y = if isTest: 10 else: 2_000_000
     ranges = input.sensors.getScanLine(y)
 
-  for x in input.minX .. input.maxX:
+  for x in input.min.x .. input.max.x:
     if (x, y) notin beaconPositions:
       for range in ranges:
         if x >= range.minX and x <= range.maxX:
@@ -48,7 +48,18 @@ func runPartOne*(input: Scan; isTest: bool): int =
           break
 
 func runPartTwo*(input: Scan; isTest: bool): int =
-  for y in 0 .. (if isTest: 20 else: 4_000_000):
+  let
+    maxY = if isTest: 20 else: 4_000_000
+    startY = max(0, input.min.y)
+    stopY = min(maxY, input.max.y)
+    loop =
+      if startY > maxY - stopY:
+        (start: startY, stop: stopY, delta: 1)
+      else:
+        (start: stopY, stop: startY, delta: -1)
+
+  var y = loop.start
+  while y != loop.stop:
     var
       ranges = input.sensors.getScanLine(y).sorted((a, b) => a.minX - b.minX)
       i = 1
@@ -60,3 +71,5 @@ func runPartTwo*(input: Scan; isTest: bool): int =
         return (ranges[i].minX - 1) * 4_000_000 + y
 
       i += 1
+
+    y += loop.delta

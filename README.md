@@ -122,4 +122,4 @@ Today was mostly about getting the halting conditions right. Run times in debug 
 
 ### Day 15 (Nim)
 
-Rewrote this several times to get sensible run times. It could probably be improved further still, but my latest scan line approach keeps part 2 under 2 seconds, which feels good enough.
+Rewrote this several times to get sensible run times. It could probably be improved further still, but my latest scan line approach keeps part 2 under 2 seconds, which feels good enough. I also had to make some adjustments to the base code in order to handle the test cases correctly this time around.

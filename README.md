@@ -124,3 +124,7 @@ Today was mostly about getting the halting conditions right. Run times in debug 
 
 Rewrote this several times to get sensible run times. It could probably be improved further still, but my latest scan line approach keeps part 2 under 2 seconds, which feels good enough. I also had to make some adjustments to the base code in order to handle the test cases correctly this time around.
 *__Update:__ Came up with a way to reduce the search space in part 2, which knocked two thirds off the execution time.*
+
+### Day 18 (Nim)
+
+Using a generic flood fill algorithm for part 2, with conservative limits. It's not the fastest, but it does the job.

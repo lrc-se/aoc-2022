@@ -128,3 +128,7 @@ Rewrote this several times to get sensible run times. It could probably be impro
 ### Day 18 (Nim)
 
 Using a generic flood fill algorithm for part 2, with conservative limits. It's not the fastest, but it does the job.
+
+### Day 20 (Nim)
+
+Nim's built-in doubly-linked ring data structure came in very handy here, together with some more periodic thinking.

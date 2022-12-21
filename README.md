@@ -132,3 +132,7 @@ Using a generic flood fill algorithm for part 2, with conservative limits. It's 
 ### Day 20 (Nim)
 
 Nim's built-in doubly-linked ring data structure came in very handy here, together with some more periodic thinking.
+
+### Day 21 (Nim)
+
+Good fit for Nim's object variants and case syntax.

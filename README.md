@@ -136,3 +136,7 @@ Nim's built-in doubly-linked ring data structure came in very handy here, togeth
 ### Day 21 (Nim)
 
 Good fit for Nim's object variants and case syntax.
+
+### Day 23 (Nim)
+
+Hash tables and hash sets all the way.

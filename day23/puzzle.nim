@@ -24,43 +24,46 @@ const
   }.toTable
   moveDirections = [North, South, West, East]
 
-func performRound(elves: var Elves; dirOffset: int): int =
-  var
-    proposals = initTable[Coord, Coord]()
-    destinations = initCountTable[Coord]()
+iterator rounds(elves: var Elves; maxCount = int.high): int =
+  var dirOffset = 0
+  for _ in 1 .. maxCount:
+    var
+      proposals = initTable[Coord, Coord]()
+      destinations = initCountTable[Coord]()
 
-  for elf in elves:
-    var otherElves = initHashSet[Coord]()
-    for dir in Direction.low .. Direction.high:
-      let pos = (elf.x + deltas[dir].x, elf.y + deltas[dir].y)
-      if pos in elves:
-        otherElves.incl(pos)
+    for elf in elves:
+      var otherElves = initHashSet[Coord]()
+      for dir in Direction.low .. Direction.high:
+        let pos = (elf.x + deltas[dir].x, elf.y + deltas[dir].y)
+        if pos in elves:
+          otherElves.incl(pos)
 
-    if otherElves.card == 0:
-      continue
+      if otherElves.card == 0:
+        continue
 
-    var dirCounter = dirOffset
-    for _ in moveDirections.low .. moveDirections.high:
-      var canMove = true
-      let moveDirection = moveDirections[dirCounter mod moveDirections.len]
-      for lookDirection in lookDirections[moveDirection]:
-        if (elf.x + deltas[lookDirection].x, elf.y + deltas[lookDirection].y) in otherElves:
-          canMove = false
+      for i in dirOffset ..< dirOffset + moveDirections.len:
+        var canMove = true
+        let moveDirection = moveDirections[i mod moveDirections.len]
+        for lookDirection in lookDirections[moveDirection]:
+          if (elf.x + deltas[lookDirection].x, elf.y + deltas[lookDirection].y) in otherElves:
+            canMove = false
+            break
+
+        if canMove:
+          let pos = (elf.x + deltas[moveDirection].x, elf.y + deltas[moveDirection].y)
+          proposals[elf] = pos
+          destinations.inc(pos)
           break
 
-      if canMove:
-        let pos = (elf.x + deltas[moveDirection].x, elf.y + deltas[moveDirection].y)
-        proposals[elf] = pos
-        destinations.inc(pos)
-        break
+    var moveCount = 0
+    for oldPos, newPos in proposals:
+      if destinations[newPos] == 1:
+        elves.excl(oldPos)
+        elves.incl(newPos)
+        moveCount += 1
 
-      dirCounter += 1
-
-  for oldPos, newPos in proposals:
-    if destinations[newPos] == 1:
-      elves.excl(oldPos)
-      elves.incl(newPos)
-      result += 1
+    yield moveCount
+    dirOffset += 1
 
 
 func parseInput*(lines: seq[string]): Elves =
@@ -71,8 +74,8 @@ func parseInput*(lines: seq[string]): Elves =
 
 func runPartOne*(input: Elves): int =
   var elves = input
-  for i in 0 .. 9:
-    discard elves.performRound(i)
+  for _ in elves.rounds(10):
+    discard
 
   let
     elfSeq = elves.toSeq
@@ -88,7 +91,7 @@ func runPartOne*(input: Elves): int =
 
 func runPartTwo*(input: Elves): int =
   var elves = input
-  while elves.performRound(result) > 0:
+  for moveCount in elves.rounds:
     result += 1
-
-  result += 1
+    if moveCount == 0:
+      return

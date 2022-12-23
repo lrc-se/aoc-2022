@@ -140,3 +140,4 @@ Good fit for Nim's object variants and case syntax.
 ### Day 23 (Nim)
 
 Hash tables and hash sets all the way.
+*__Update:__ Employed an iterator to keep internal track of the offset instead.*

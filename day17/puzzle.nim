@@ -1,4 +1,4 @@
-import rock
+import rocks
 
 func parseInput*(lines: seq[string]): Jets =
   for dir in lines[0]:

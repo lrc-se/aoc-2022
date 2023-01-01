@@ -141,6 +141,10 @@ Nim's built-in doubly-linked ring data structure came in very handy here, togeth
 
 Good fit for Nim's object variants and case syntax.
 
+### Day 22 (Nim)
+
+Playing around with more object variants and cases, as well as enums and rotations. The algorithm for determining face rotations in part 2 is surely on the cumbersome side, but it does work and is also rather fast, so I'll leave it.
+
 ### Day 23 (Nim)
 
 Hash tables and hash sets all the way.

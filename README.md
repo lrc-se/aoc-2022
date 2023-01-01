@@ -150,6 +150,10 @@ Playing around with more object variants and cases, as well as enums and rotatio
 Hash tables and hash sets all the way.
 *__Update:__ Employed an iterator to keep internal track of the offset instead.*
 
+### Day 24 (Nim)
+
+Another stateful object made this rather an efficient affair (after a very inefficient, but working, first attempt), using breadth-first traversal of possible moves.
+
 ### Day 25 (F#)
 
 Finally back to F#, pattern matching and recursion. Also, longs.

@@ -125,6 +125,12 @@ Today was mostly about getting the halting conditions right. Run times in debug 
 Rewrote this several times to get sensible run times. It could probably be improved further still, but my latest scan line approach keeps part 2 under 2 seconds, which feels good enough. I also had to make some adjustments to the base code in order to handle the test cases correctly this time around.
 *__Update:__ Came up with a way to reduce the search space in part 2, which knocked two thirds off the execution time.*
 
+### Day 16 (Nim)
+
+This was a tough one. After a while I took to POC-ing in JS, and eventually came upon a solution based on precomputing optimal paths between working valves.
+For part 2 I had a good number of false starts before realizing that I could frame the problem as a linear combination of partial solutions to part 1.
+Then I "just" had to translate back to Nim, which took some doing, but the end result is rather fast.
+
 ### Day 17 (Nim)
 
 Sets, ordinals and stateful custom objects to the rescue, employing custom hashes to find the cycle in part 2.

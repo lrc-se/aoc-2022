@@ -24,7 +24,7 @@ const
   }.toTable
   moveDirections = [North, South, West, East]
 
-iterator rounds(elves: var Elves; maxCount = int.high): int =
+iterator performRounds(elves: var Elves; maxCount = int.high): int =
   var dirOffset = 0
   for _ in 1 .. maxCount:
     var
@@ -63,6 +63,9 @@ iterator rounds(elves: var Elves; maxCount = int.high): int =
         moveCount += 1
 
     yield moveCount
+    if moveCount == 0:
+      break
+
     dirOffset += 1
 
 
@@ -74,7 +77,7 @@ func parseInput*(lines: seq[string]): Elves =
 
 func runPartOne*(input: Elves): int =
   var elves = input
-  for _ in elves.rounds(10):
+  for _ in elves.performRounds(10):
     discard
 
   let
@@ -91,7 +94,5 @@ func runPartOne*(input: Elves): int =
 
 func runPartTwo*(input: Elves): int =
   var elves = input
-  for moveCount in elves.rounds:
+  for _ in elves.performRounds:
     result += 1
-    if moveCount == 0:
-      return

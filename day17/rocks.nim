@@ -45,9 +45,9 @@ func newRock*(rockType: RockType): Rock =
       result.form = @[(0, 1), (0, 1)]
       result.width = 2
 
-func form*(self: Rock): seq[Range] = self.form
+func form*(self: Rock): seq[Range] {.inline.} = self.form
 
-func width*(self: Rock): int = self.width
+func width*(self: Rock): int {.inline.} = self.width
 
 
 func simulateRock*(self: var RockChamber) =

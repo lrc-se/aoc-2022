@@ -9,7 +9,7 @@ type
   Valves = object
     valveMap: ValveMap
     workingValves: seq[Valve]
-  Paths = Table[string, ref Table[string, seq[string]]]
+  Paths = Table[string, TableRef[string, seq[string]]]
   Minute = object of RootObj
     number, pressure, rate: int
     curValve: Valve

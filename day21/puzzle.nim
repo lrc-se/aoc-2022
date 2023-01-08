@@ -10,21 +10,21 @@ type
         monkeys: seq[string]
   Monkeys = Table[string, Monkey]
 
-func calc(job: Job; value, number: int): int =
+func calc(job: Job; number1, number2: int): int =
   case job:
-    of Addition: value + number
-    of Subtraction: value - number
-    of Multiplication: value * number
-    of Division: value div number
-    else: value
+    of Addition: number1 + number2
+    of Subtraction: number1 - number2
+    of Multiplication: number1 * number2
+    of Division: number1 div number2
+    else: number1
 
-func calcRev(job: Job; value, number: int): int =
+func calcRev(job: Job; targetValue, number2: int): int =
   case job:
-    of Addition: value - number
-    of Subtraction: value + number
-    of Multiplication: value div number
-    of Division: value * number
-    else: value
+    of Addition: targetValue - number2
+    of Subtraction: targetValue + number2
+    of Multiplication: targetValue div number2
+    of Division: targetValue * number2
+    else: targetValue
 
 func yell(monkeys: Monkeys): Table[string, int] =
   while true:
@@ -36,8 +36,8 @@ func yell(monkeys: Monkeys): Table[string, int] =
             result[name] = monkey.number
             hasYelled = true
           elif monkey.monkeys[0] in result and monkey.monkeys[1] in result:
-              result[name] = monkey.job.calc(result[monkey.monkeys[0]], result[monkey.monkeys[1]])
-              hasYelled = true
+            result[name] = monkey.job.calc(result[monkey.monkeys[0]], result[monkey.monkeys[1]])
+            hasYelled = true
 
     if not hasYelled:
       return

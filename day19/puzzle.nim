@@ -30,20 +30,23 @@ func getMaxGeodes(blueprint: Blueprint; maxMinutes: int): int =
         result = max(result, minute.resources[Geode] + minute.robots[Geode])
         continue
 
-      var resources = minute.resources
+      var
+        resources = minute.resources
+        canBuild = initHashSet[Resource]()
+        nextMinutes: seq[Minute]
+
       for res, count in minute.robots:
         resources.inc(res, count)
 
-      var nextMinutes = @[newMinute(minute.robots, resources)]
       let lo = if i == maxMinutes - 1: Resource.high else: Resource.low
       for resource in lo .. Resource.high:
-        var canBuild = true
+        canBuild.incl(resource)
         for res, cost in blueprint.robots[resource]:
           if minute.resources[res] < cost:
-            canBuild = false
+            canBuild.excl(resource)
             break
 
-        if canBuild:
+        if resource in canBuild:
           var
             newRobots = minute.robots
             newResources = resources
@@ -53,6 +56,9 @@ func getMaxGeodes(blueprint: Blueprint; maxMinutes: int): int =
             newResources.inc(res, -cost)
 
           nextMinutes.add(newMinute(newRobots, newResources))
+
+      if Geode notin canBuild:
+        nextMinutes.add(newMinute(minute.robots, resources))
 
       var hasNew = false
       for nextMinute in nextMinutes:
